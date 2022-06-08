@@ -18,3 +18,6 @@ sudo pip install pyside6
 * # Architecture
 
 ![Architecture](/media/architecture.jpg)
+
+
+![programm_modules](/media/programm_modules.jpg)
