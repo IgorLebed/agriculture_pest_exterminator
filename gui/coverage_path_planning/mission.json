@@ -1,0 +1,26 @@
+{
+    "central_point": [
+        {
+            "latitude": 59.949345,
+            "longitude": 30.618524
+        }
+    ],
+    "polygon": [
+        {
+            "latitude": 59.949379,
+            "longitude": 30.618275
+        },
+        {
+            "latitude": 59.949434,
+            "longitude": 30.618637
+        },
+        {
+            "latitude": 59.949301,
+            "longitude": 30.618758
+        },
+        {
+            "latitude": 59.949262,
+            "longitude": 30.618321
+        }
+    ]
+}
