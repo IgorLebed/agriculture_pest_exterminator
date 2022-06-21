@@ -15,7 +15,7 @@ list_longitude = [0] * list_size
 
 def nav_cb(nsf):
     global count
-    print(count)
+    print(f'[{count}]')
     if count < list_size and not isnan(nsf.latitude):
         print(f'{nsf.latitude}    {nsf.longitude}')
         list_latitude[count] = nsf.latitude
