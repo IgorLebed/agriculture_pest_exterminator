@@ -16,6 +16,14 @@ rosrun nmea_navsat_driver nmea_serial_driver _port:=/dev/ttyACM0 _baud:=9600
 Порт может быть другим. Реальную скорость передачи данных можно посмотреть через [u-center](https://www.u-blox.com/en/product/u-center): __Configuration View -> PRT (Ports) -> Baudrate__.
 ![u-center ports](./media/u-center_ports.png)
 
+!!! У чипа u-blox 7 скорость USB порта (не USB2UART) настраивается автоматически !!!
+
+___u-blox chipsets with built-in USB support (as used in the VK-172, RY835AI, and other boards) use a USB modem interface, and appear as /dev/ttyACM0.___
+
+___In a manner of speaking, they autuobaud. More precisely, there is no baud setting, since these run as native USB devices. If you look at the u-blox protocol guide, you'll see that there literally is no way to set baud rate, start / stop bits, etc. for the ttyACM0 USB interface. The usual system commands for configuring tty devices will accept input (e.g. stty -F /devttyACM0 9600) but those are ignored.___
+
+___This is distinct from devices that use a USB-UART bridge (BU-353) to create a real serial port on /dev/ttyUSB0. In those cases, both the port and the GPS receiver need to be set to the correct rate.___
+
 ## Топики
 Визуализировать данные из топиков можно командой `rostopic echo [topic]`.
 
