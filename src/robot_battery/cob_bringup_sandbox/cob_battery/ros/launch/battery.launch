@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+	<!-- upload parameters -->
+
+
+	<!-- start battery node -->
+	<node name="battery_node" pkg="cob_battery" type="bat_state.py" ns="battery_controller" output="screen"/>
+
+</launch>
