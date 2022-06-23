@@ -16,7 +16,7 @@ rosrun nmea_navsat_driver nmea_serial_driver _port:=/dev/ttyACM0 _baud:=9600
 Порт может быть другим. Реальную скорость передачи данных можно посмотреть через [u-center](https://www.u-blox.com/en/product/u-center): __Configuration View -> PRT (Ports) -> Baudrate__.
 ![u-center ports](./media/u-center_ports.png)
 
-!!! У чипа u-blox 7 скорость USB порта (не USB2UART) настраивается автоматически !!!
+!!! У чипа u-blox 7 скорость USB порта (не Serial2USB) настраивается автоматически !!!
 
 ___u-blox chipsets with built-in USB support (as used in the VK-172, RY835AI, and other boards) use a USB modem interface, and appear as /dev/ttyACM0.___
 
