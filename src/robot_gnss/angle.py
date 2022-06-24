@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from math import acos, asin, sin, sqrt, degrees, radians
 
 # https://en.wikipedia.org/wiki/Great-circle_distance
