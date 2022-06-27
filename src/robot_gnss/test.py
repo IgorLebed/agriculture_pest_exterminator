@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-# Тест получения данных с GNSS модуля
-# Скрипт копит значения и выдает среднее арифметическое
+# Test of receiving data from the GNSS module
+# The script accumulates values and outputs the arithmetic mean
 
 import rospy
 from numpy import isnan, mean

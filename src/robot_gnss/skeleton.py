@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 
-# СКЕЛЕТ ОСНОВНОЙ ПРОГРАММЫ
+# THE SKELETON OF THE MAIN PROGRAM
 
 import rospy
 from numpy import nan, isnan
 from sensor_msgs.msg import NavSatFix
 import gnss_math as gm
 
-# ====
-# УГОЛ
-# ====
-latitude = nan
-longitude = nan
+# =====
+# ANGLE
+# =====
+latitude = 1
+longitude = 1
 
 
 def nav_cb(nsf):
@@ -22,32 +22,32 @@ def nav_cb(nsf):
 rospy.init_node('robot', anonymous=True)
 nav = rospy.Subscriber('fix', NavSatFix, nav_cb, queue_size=10)
 
-# ===============
-# ПОЛУЧЕНИЕ ТОЧЕК
-# ===============
-# todo: получаем точки
-point_list = [[100, 100][200, 200][300, 300][400, 400]]  # загруженные точки
+# ==============
+# GETTING POINTS
+# ==============
+# TODO: GET POINTS
+point_list = [[100, 100][110, 110][120, 120][130, 130]]  # загруженные точки
 
 # ================
-# ПРОХОД ПО ТОЧКАМ
+# PASSING BY POINT
 # ================
-err_dist = 1  # м, допустимая ошибка
-err_angl = 15  # градусы, допустимая ошибка
+err_dist = 1  # m, allowable error
+err_angl = 15  # degrees, allowable error
 latitude_old = latitude
 longitude_old = longitude
 
 for point in point_list:
-    while gm.distance((latitude, longitude), (point)) > err_dist:  # Пока не доехали до точки
+    while gm.distance((latitude, longitude), (point)) > err_dist:  # Until we reach the point
         dist = gm.distance((latitude, longitude), (point))
         angl = gm.angle((latitude_old, longitude_old),
                         (latitude, longitude),
                         (point))
-        # Обновление *_old необходимо сделать в начале итерации, но после всех подсчетов,
-        # где необходимы *_old
+        # Updating *_old must be done at the beginning of the iteration,
+        # but after all the calculations where *_old is needed
         latitude_old = latitude
         longitude_old = longitude
         if abs(angl) > err_angl:
-            # todo: ПОВЕРНУТЬ
+            # TODO: TURN
             pass
-        # todo: ехать вперед
-        # todo: sleep(1)
+        # TODO: GO AHEAD
+        # TODO: SLEEP(1)
