@@ -10,7 +10,7 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
 
     m = folium.Map(
-        location=[59.954809, 30.630337], zoom_start=16   #tiles="Stamen Toner"
+        location=[59.954809, 30.630337], zoom_start=16  , tiles="Stamen Toner"
     )
     MousePosition().add_to(m)
 
