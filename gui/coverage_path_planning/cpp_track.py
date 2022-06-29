@@ -1,11 +1,13 @@
 """
-Performs JSON mission file reading, GPS-coordinates conversion to ENU system,
+Performs GEOJSON mission file reading, GPS-coordinates conversion to ENU system,
 CPP trajectory calculation, waypoints conversion back to GPS-coordinates,
 trajectory JSON file generation.
 
 """
 import os
+from pathlib import Path
 import json
+import geojson
 import pymap3d as pm
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
@@ -41,13 +43,16 @@ def export_polygon(filename):
 	lon = []
 	if os.path.exists(filename):
 		with open(filename, "r") as f: 
-			mission_data = json.load(f) 
-			my_polygon = mission_data.get("polygon")
-			for i in range(len(my_polygon)):
-				lat.append(my_polygon[i].pop("latitude"))
-				lon.append(my_polygon[i].pop("longitude"))
+			mission_data = geojson.load(f) 
+			my_polygon = mission_data['features'][1]['geometry']['coordinates']
+			for i in range(len(my_polygon[0])):
+				lat.append(my_polygon[0][i][0])
+				lon.append(my_polygon[0][i][1])
+			lat.pop(0)
+			lon.pop(0)
 	else:
 		print("There is no file with mission!")
+	#print("poly" , lat ,lon)
 	return lat, lon
 
 
@@ -55,14 +60,13 @@ def export_central_point(filename):
 	point_data = []
 	if os.path.exists(filename):
 		with open(filename, "r") as f: 
-			point_data = json.load(f) 
-			my_point = point_data.get("central_point")
-			for i in range(len(my_point)):
-				lat0 = my_point[i].pop("latitude")
-				lon0 = my_point[i].pop("longitude")
+			point_data = geojson.load(f) 
+			my_point = point_data['features'][0]['geometry']['coordinates']
+			lat0 = my_point[0]
+			lon0 = my_point[1]
 	else:
 		print("There is no file with mission!")
-	print(lat0, lon0)
+	#print("CP", lat0,lon0)
 	return float(lat0), float(lon0)
 	
 
@@ -77,9 +81,12 @@ def main():
 	h0_ = 0 
 	h_ = 0   
 
-	sweep_resolution = 2 #input("Input resolution: ")
-	lat0_, lon0_ = export_central_point("/home/igor/agriculture_pest_exterminator/gui/coverage_path_planning/mission.json")		
-	lat_, lon_ = export_polygon("/home/igor/agriculture_pest_exterminator/gui/coverage_path_planning/mission.json")				
+	sweep_resolution = 10.12 
+
+	home = str(Path.home())
+	path = home + '/agriculture_pest_exterminator/gui/coverage_path_planning/mission.geojson'
+	lat0_, lon0_ = export_central_point(path)		# to change filename/path to file
+	lat_, lon_ = export_polygon(path)				# to change filename/path to file
 	
 	for i in range(len(lat_)):
 		enu_coord.append(pm.geodetic2enu(lat_[i], lon_[i], h_, lat0_, lon0_, h0_))
@@ -105,7 +112,7 @@ def main():
 		cpp_path_gps.append(pm.enu2geodetic(goal_x[i], goal_y[i], h_, lat0_, lon0_, h0_))
 
 	json_string = json.dumps(list(cpp_path_gps))
-	with open("/home/igor/agriculture_pest_exterminator/gui/coverage_path_planning/trajectory.json", "w") as outfile:
+	with open("trajectory.json", "w") as outfile:
 		outfile.write(json_string)
 	
 	print('Waypoints(ENU):')
