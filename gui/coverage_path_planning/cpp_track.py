@@ -44,15 +44,26 @@ def export_polygon(filename):
 	if os.path.exists(filename):
 		with open(filename, "r") as f: 
 			mission_data = geojson.load(f) 
-			my_polygon = mission_data['features'][1]['geometry']['coordinates']
-			for i in range(len(my_polygon[0])):
-				lat.append(my_polygon[0][i][0])
-				lon.append(my_polygon[0][i][1])
-			lat.pop(0)
-			lon.pop(0)
+			if type(mission_data['features'][0]['geometry']) == geojson.geometry.Polygon:
+				my_polygon = mission_data['features'][0]['geometry']['coordinates']
+				for i in range(len(my_polygon[0])):
+					lat.append(my_polygon[0][i][1])
+					lon.append(my_polygon[0][i][0])
+				lat.pop(0)
+				lon.pop(0)
+			if type(mission_data['features'][1]['geometry']) == geojson.geometry.Polygon:
+				my_polygon = mission_data['features'][1]['geometry']['coordinates']
+				print(my_polygon[0])
+				for i in range(len(my_polygon[0])):
+					lat.append(my_polygon[0][i][1])
+					lon.append(my_polygon[0][i][0])
+				lat.pop(0)
+				lon.pop(0)
+			else:
+				print("No polygon!")
 	else:
 		print("There is no file with mission!")
-	#print("poly" , lat ,lon)
+	print("poly" , lat ,lon)
 	return lat, lon
 
 
@@ -61,12 +72,19 @@ def export_central_point(filename):
 	if os.path.exists(filename):
 		with open(filename, "r") as f: 
 			point_data = geojson.load(f) 
-			my_point = point_data['features'][0]['geometry']['coordinates']
-			lat0 = my_point[0]
-			lon0 = my_point[1]
+			if type(point_data['features'][0]['geometry']) == geojson.geometry.Point:
+				my_point = point_data['features'][0]['geometry']['coordinates']
+				lat0 = my_point[1]
+				lon0 = my_point[0]
+			if type(point_data['features'][1]['geometry']) == geojson.geometry.Point:
+				my_point = point_data['features'][1]['geometry']['coordinates']
+				lat0 = my_point[1]
+				lon0 = my_point[0]
+			else:
+				print("No central point!")
 	else:
 		print("There is no file with mission!")
-	#print("CP", lat0,lon0)
+	print("CP", lat0, lon0)
 	return float(lat0), float(lon0)
 	
 
@@ -81,7 +99,7 @@ def main():
 	h0_ = 0 
 	h_ = 0   
 
-	sweep_resolution = 10.12 
+	sweep_resolution = 10 #TODO: dynamic import through GUI
 
 	home = str(Path.home())
 	path = home + '/agriculture_pest_exterminator/gui/coverage_path_planning/mission.geojson'
@@ -112,7 +130,8 @@ def main():
 		cpp_path_gps.append(pm.enu2geodetic(goal_x[i], goal_y[i], h_, lat0_, lon0_, h0_))
 
 	json_string = json.dumps(list(cpp_path_gps))
-	with open("trajectory.json", "w") as outfile:
+	path_out = home + '/agriculture_pest_exterminator/gui/coverage_path_planning/'
+	with open(path_out + "trajectory.json", "w") as outfile:
 		outfile.write(json_string)
 	
 	print('Waypoints(ENU):')
