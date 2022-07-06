@@ -24,7 +24,7 @@ sys.path.insert(0, path) #TODO add auto path without igor folder
 import cpp_track
 
 class Ui_MainWindow(object):
-
+    
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1202, 664)
@@ -134,13 +134,14 @@ class Ui_MainWindow(object):
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+    
     def __init__(self):
         super().__init__()
         self.setupUi(self)
 
         self.gridLayout_2 = QtWidgets.QGridLayout(self.map_tab)
         self.gridLayout_2.setObjectName("gridLayout_2")
-
+        
         
         self.aplication()
         self.webView = QtWebEngineWidgets.QWebEngineView(self.verticalLayoutWidget_2)
@@ -159,9 +160,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def aplication(self):
         self.m = folium.Map(location=[59.954809, 30.630337], zoom_start=16)
-
+        
         self.data = io.BytesIO()
-
+        
         basemaps = {
             'Google Maps': folium.TileLayer(
                 tiles = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
@@ -206,7 +207,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.m.add_child(folium.LayerControl())
         self.m.add_child(folium.LatLngPopup())
-
+        
         # Add plagins
         Draw(
             export=True,
@@ -234,6 +235,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
     def add_functions(self):
         self.trajectory_generation.clicked.connect(lambda: self.cpp_btn_fun())
+    
 
     # Function write to some text label
     def write_number(self, number):
