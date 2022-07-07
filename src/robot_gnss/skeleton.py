@@ -27,7 +27,6 @@ nav = rospy.Subscriber('fix', NavSatFix, nav_cb, queue_size=10)
 # ==============
 # GETTING POINTS
 # ==============
-# TODO: GET POINTS
 with open('trajectory.json') as file:
     point_list = json.load(file)
 rospy.loginfo(f'Trajectory loaded, number of points: {len(point_list)}')
@@ -35,8 +34,8 @@ rospy.loginfo(f'Trajectory loaded, number of points: {len(point_list)}')
 # ================
 # PASSING BY POINT
 # ================
-err_dist = 1  # m, allowable error TODO: выбрать оптимальный
-err_angl = 20  # degrees, allowable error TODO: выбрать оптимальный
+err_dist = 1  # m, allowable error TODO: choose the best
+err_angl = 20  # degrees, allowable error TODO: choose the best
 latitude_old = latitude
 longitude_old = longitude
 
@@ -52,7 +51,7 @@ for point in point_list:
         if latitude is not None and longitude is not None:
             dist = gm.distance((latitude, longitude), (point[0], point[1]))
             rospy.loginfo(f'dist: {dist}')
-            # TODO: Фото, поиск лунок и сброс отравы
+            # TODO:  photo
             # Distance
             if dist > err_dist:
                 angl = gm.angle((latitude_old, longitude_old),
