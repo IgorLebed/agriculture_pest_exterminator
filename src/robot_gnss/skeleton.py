@@ -48,14 +48,18 @@ for point in point_list:
     rospy.loginfo(f'Point: {point}')
     while not rospy.is_shutdown():
         ffbc.set_wheels_frequency(0, 0)
+        rospy.loginfo('-- 0  0')
         if latitude is not None and longitude is not None:
             dist = gm.distance((latitude, longitude), (point[0], point[1]))
+            rospy.loginfo(f'dist: {dist}')
             # TODO: Фото, поиск лунок и сброс отравы
             # Distance
             if dist > err_dist:
                 angl = gm.angle((latitude_old, longitude_old),
                                 (latitude, longitude), (point[0], point[1]))
+                rospy.loginfo(f'angl: {angl}')
                 ffbc.set_wheels_frequency(20, 20)
+                rospy.loginfo('-- 20 20')
                 rospy.sleep(5)
                 # Angle
                 if abs(angl) > err_angl:
@@ -67,8 +71,10 @@ for point in point_list:
                         angl_wheel = 60
                     if angl > 0:
                         ffbc.set_wheels_frequency(angl_wheel, 0)
+                        rospy.loginfo(f'-- {angl_wheel} 0')
                     else:
                         ffbc.set_wheels_frequency(0, angl_wheel)
+                        rospy.loginfo(f'-- 0  {angl_wheel}')
                 rospy.sleep(5)
                 latitude_old = latitude
                 longitude_old = longitude
@@ -77,3 +83,4 @@ for point in point_list:
         else:
             rospy.sleep(1)
 ffbc.set_wheels_frequency(0, 0)
+rospy.loginfo('-- 0  0')
