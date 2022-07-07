@@ -47,6 +47,7 @@ rospy.loginfo('Wheel control loaded')
 for point in point_list:
     rospy.loginfo(f'Point: {point}')
     while not rospy.is_shutdown():
+        ffbc.set_wheels_frequency(0, 0)
         if latitude is not None and longitude is not None:
             dist = gm.distance((latitude, longitude), (point[0], point[1]))
             # TODO: Фото, поиск лунок и сброс отравы
@@ -68,9 +69,11 @@ for point in point_list:
                         ffbc.set_wheels_frequency(angl_wheel, 0)
                     else:
                         ffbc.set_wheels_frequency(0, angl_wheel)
-                    rospy.sleep(5)
+                rospy.sleep(5)
                 latitude_old = latitude
                 longitude_old = longitude
             else:
                 break
+        else:
+            rospy.sleep(1)
 ffbc.set_wheels_frequency(0, 0)
