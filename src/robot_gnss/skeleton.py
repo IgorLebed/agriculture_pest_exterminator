@@ -68,6 +68,7 @@ for point in point_list:
                         ffbc.set_wheels_frequency(angl_wheel, 0)
                     else:
                         ffbc.set_wheels_frequency(0, angl_wheel)
+                    rospy.sleep(5)
                 latitude_old = latitude
                 longitude_old = longitude
             else:
