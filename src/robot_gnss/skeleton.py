@@ -7,13 +7,13 @@ import json
 from numpy import nan, isnan
 from sensor_msgs.msg import NavSatFix
 import gnss_math as gm
-from class1 import FourXFourBotControl
+from rosclass1 import FourXFourBotControl
 
 # =====
 # ANGLE
 # =====
-latitude = None
-longitude = None
+latitude = nan
+longitude = nan
 
 
 def nav_cb(nsf):
@@ -44,11 +44,14 @@ rospy.loginfo('Wheel control loaded')
 
 
 for point in point_list:
-    rospy.loginfo(f'Point: {point}')
+    if rospy.is_shutdown():
+        break
+    rospy.loginfo(f'\n====\nPoint: {point}')
     while not rospy.is_shutdown():
         ffbc.set_wheels_frequency(0, 0)
         rospy.loginfo('-- 0  0')
         if latitude is not None and longitude is not None:
+            rospy.loginfo(f'gnss {latitude} {longitude}')
             dist = gm.distance((latitude, longitude), (point[0], point[1]))
             rospy.loginfo(f'dist: {dist}')
             # TODO:  photo
@@ -82,4 +85,4 @@ for point in point_list:
         else:
             rospy.sleep(1)
 ffbc.set_wheels_frequency(0, 0)
-rospy.loginfo('-- 0  0')
+print('EXIT')
