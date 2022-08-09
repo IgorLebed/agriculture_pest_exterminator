@@ -1,0 +1,2 @@
+# u-blox 7 - GPS/GNSS Receiver
+KERNEL=="ttyUSB[0-9]*", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="robot-wheels"
