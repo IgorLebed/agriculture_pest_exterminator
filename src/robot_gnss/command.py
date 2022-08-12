@@ -11,6 +11,7 @@ while not rospy.is_shutdown():
     if left > 120:
         break
     right = int(input('right: '))
+    time = float(input('time: '))
 
     for i in range(5):
         ffbc.set_wheels_frequency(left, right)
