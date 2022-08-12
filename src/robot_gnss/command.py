@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from class1 import FourXFourBotControl
+from rosclass1 import FourXFourBotControl
 import rospy
 
 rospy.init_node('tx2', anonymous=True)
@@ -15,9 +15,9 @@ while not rospy.is_shutdown():
 
     for i in range(5):
         ffbc.set_wheels_frequency(left, right)
-        rospy.sleep(0.1)
+        # rospy.sleep(0.1)
     rospy.sleep(time)
 
     for i in range(5):
         ffbc.set_wheels_frequency(0, 0)
-        rospy.sleep(0.1)
+        # rospy.sleep(0.1)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from class1 import FourXFourBotControl
+from rosclass1 import FourXFourBotControl
 import rospy
 
 rospy.init_node('tx2', anonymous=True)
