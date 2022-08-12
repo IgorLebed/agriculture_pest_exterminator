@@ -16,7 +16,7 @@ while not rospy.is_shutdown():
     for i in range(5):
         ffbc.set_wheels_frequency(left, right)
         rospy.sleep(0.1)
-    rospy.sleep(5)
+    rospy.sleep(time)
 
     for i in range(5):
         ffbc.set_wheels_frequency(0, 0)
