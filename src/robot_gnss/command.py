@@ -11,6 +11,12 @@ while not rospy.is_shutdown():
     if left > 120:
         break
     right = int(input('right: '))
-    ffbc.set_wheels_frequency(left, right)
+
+    for i in range(5):
+        ffbc.set_wheels_frequency(left, right)
+        rospy.sleep(0.1)
     rospy.sleep(5)
-    ffbc.set_wheels_frequency(0, 0)
+
+    for i in range(5):
+        ffbc.set_wheels_frequency(0, 0)
+        rospy.sleep(0.1)
