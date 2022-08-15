@@ -15,22 +15,22 @@ right_back = 0
 
 def lf_cb(speed):
     global left_front
-    left_front = speed
+    left_front = speed.data
 
 
 def lb_cb(speed):
     global left_back
-    left_back = speed
+    left_back = speed.data
 
 
 def rf_cb(speed):
     global right_front
-    right_front = speed
+    right_front = speed.data
 
 
 def rb_cb(speed):
     global right_back
-    right_back = speed
+    right_back = speed.data
 
 
 def set_speed(time, left, right, last_left, last_right):
