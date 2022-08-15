@@ -13,22 +13,22 @@ right_front = 0
 right_back = 0
 
 
-def lf_cb(self, speed):
+def lf_cb(speed):
     global left_front
     left_front = speed
 
 
-def lb_cb(self, speed):
+def lb_cb(speed):
     global left_back
     left_back = speed
 
 
-def rf_cb(self, speed):
+def rf_cb(speed):
     global right_front
     right_front = speed
 
 
-def rb_cb(self, speed):
+def rb_cb(speed):
     global right_back
     right_back = speed
 
