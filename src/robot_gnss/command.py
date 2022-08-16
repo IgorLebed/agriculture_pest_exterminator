@@ -35,12 +35,28 @@ def rb_cb(speed):
 
 def set_speed(time, left, right, last_left, last_right):
     ffbc.set_wheels_frequency(left, right)
-    while (abs(left_front - last_left) < 5
-           or abs(left_back - last_left) < 5
-           or abs(right_front - last_right) < 5
-           or abs(right_back - last_right) < 5):
-        ffbc.set_wheels_frequency(left, right)
-        rospy.sleep(0.2)
+    if (abs(left - last_left) < 10 and abs(right - last_right) < 10):
+        for i in range(5):
+            ffbc.set_wheels_frequency(left, right)
+            rospy.sleep(0.2)
+    elif abs(left - last_left) < 10:
+        while (abs(right_front - last_right) < 5
+               or abs(right_back - last_right) < 5):
+            ffbc.set_wheels_frequency(left, right)
+            rospy.sleep(0.2)
+    elif abs(right - last_right) < 10:
+        while (abs(left_front - last_left) < 5
+               or abs(left_back - last_left) < 5):
+            ffbc.set_wheels_frequency(left, right)
+            rospy.sleep(0.2)
+    else:
+        while (abs(left_front - last_left) < 5
+               or abs(left_back - last_left) < 5
+               or abs(right_front - last_right) < 5
+               or abs(right_back - last_right) < 5):
+            ffbc.set_wheels_frequency(left, right)
+            rospy.sleep(0.2)
+    rospy.sleep(time)
 
 
 if __name__ == '__main__':
