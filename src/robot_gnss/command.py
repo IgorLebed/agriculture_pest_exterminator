@@ -33,30 +33,29 @@ def rb_cb(speed):
     right_back = speed.data
 
 
-def set_speed(time, left, right, last_left, last_right):
+def set_speed(left, right, last_left, last_right):
     ffbc.set_wheels_frequency(left, right)
-    if (abs(left - last_left) < 10 and abs(right - last_right) < 10):
-        for i in range(5):
+    if (abs(left - last_left) < 15 and abs(right - last_right) < 15):
+        for i in range(10):
             ffbc.set_wheels_frequency(left, right)
             rospy.sleep(0.2)
-    elif abs(left - last_left) < 10:
-        while (abs(right_front - last_right) < 5
-               or abs(right_back - last_right) < 5):
+    elif abs(left - last_left) < 15:
+        while (abs(right_front - last_right) < 10
+               or abs(right_back - last_right) < 10):
             ffbc.set_wheels_frequency(left, right)
             rospy.sleep(0.2)
-    elif abs(right - last_right) < 10:
-        while (abs(left_front - last_left) < 5
-               or abs(left_back - last_left) < 5):
+    elif abs(right - last_right) < 15:
+        while (abs(left_front - last_left) < 10
+               or abs(left_back - last_left) < 10):
             ffbc.set_wheels_frequency(left, right)
             rospy.sleep(0.2)
     else:
-        while (abs(left_front - last_left) < 5
-               or abs(left_back - last_left) < 5
-               or abs(right_front - last_right) < 5
-               or abs(right_back - last_right) < 5):
+        while (abs(left_front - last_left) < 10
+               or abs(left_back - last_left) < 10
+               or abs(right_front - last_right) < 10
+               or abs(right_back - last_right) < 10):
             ffbc.set_wheels_frequency(left, right)
             rospy.sleep(0.2)
-    rospy.sleep(time)
 
 
 if __name__ == '__main__':
@@ -75,9 +74,9 @@ if __name__ == '__main__':
         right = int(input('right: '))
         time = float(input('time: '))
 
-        set_speed(time, left, right, 0, 0)
+        set_speed(left, right, 0, 0)
         # ffbc.set_wheels_frequency(left, right)
         rospy.sleep(time)
 
-        set_speed(0, 0, 0, left, right)
+        set_speed(0, 0, left, right)
         # ffbc.set_wheels_frequency(0, 0)
